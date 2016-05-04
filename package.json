@@ -1,0 +1,33 @@
+{
+  "name": "eager-particles",
+  "version": "0.0.0",
+  "description": "Particle background with [Eager](https://eager.io).",
+  "main": "app.js",
+  "scripts": {
+    "watch:js": "babel --watch --out-dir build app.js",
+    "watch:css": "postcss --watch --use autoprefixer -o build/app.css app.css",
+    "build": "NODE_ENV=production babel --out-dir build app.js && postcss --use autoprefixer -o build/app.css app.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EagerApps/Particles.git"
+  },
+  "author": "Eager",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EagerApps/Particles/issues"
+  },
+  "homepage": "https://github.com/EagerApps/Particles#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "6.3.6",
+    "babel-cli": "6.4.5",
+    "babel-eslint": "5.0.0",
+    "babel-preset-es2015": "6.3.13",
+    "babel-preset-stage-0": "6.3.13",
+    "eslint": "2.2.0",
+    "eslint-loader": "1.3.0",
+    "eslint-plugin-babel": "3.1.0",
+    "postcss-cli": "2.5.1"
+  }
+}
