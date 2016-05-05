@@ -68,7 +68,7 @@
             "type": "string",
             "title": "Click",
             "description": "What should the particles do when the user clicks their pointer?",
-            "default": "repulse",
+            "default": "push",
             "enum": [
               "push",
               "remove",
@@ -99,8 +99,8 @@
             "description": "What should happens when a particle hits the edge of the screen?",
             "default": "out",
             "enum": [
-              "bounce",
-              "out"
+              "out",
+              "bounce"
             ],
             "enumNames": {
               "bounce": "Bounce back in",
