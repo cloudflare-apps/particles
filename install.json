@@ -67,7 +67,7 @@
         "type": "string",
         "title": "Change what particles do when you click your mouse",
         "showIf": "interactable",
-        "default": "bubble",
+        "default": "repulse",
         "enum": [
           "push",
           "remove",
