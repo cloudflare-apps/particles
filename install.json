@@ -39,61 +39,74 @@
         "format": "color",
         "default": "#ffa267"
       },
-      "interactable": {
+      "interaction": {
         "order": 3,
-        "type": "boolean",
-        "title": "Allow interactivity with particles",
-        "default": true
+        "type": "object",
+        "title": "Interaction",
+        "properties": {
+          "onHover": {
+            "order": 1,
+            "type": "string",
+            "description": "What should the particles do when the user moves their pointer?",
+            "title": "Hover",
+            "default": "grab",
+            "enum": [
+              "grab",
+              "repulse",
+              "bubble",
+              "none"
+            ],
+            "enumNames": {
+              "grab": "Connect to pointer",
+              "repulse": "Push away",
+              "bubble": "Grow",
+              "none": "Nothing"
+            }
+          },
+          "onClick": {
+            "order": 2,
+            "type": "string",
+            "title": "Click",
+            "description": "What should the particles do when the user clicks their pointer?",
+            "default": "repulse",
+            "enum": [
+              "push",
+              "remove",
+              "repulse",
+              "bubble",
+              "none"
+            ],
+            "enumNames": {
+              "push": "Add particles",
+              "remove": "Remove particles",
+              "repulse": "Push particles away",
+              "bubble": "Grow particles",
+              "none": "Nothing"
+            }
+          }
+        }
       },
-      "onHover": {
+
+      "behavior": {
         "order": 4,
-        "type": "string",
-        "title": "Change what particles do when your mouse is there",
-        "showIf": "interactable",
-        "default": "grab",
-        "enum": [
-          "grab",
-          "repulse",
-          "bubble"        
-        ],
-        "enumNames": {
-          "grab": "Mouse pulls in particles",
-          "repulse": "Mouse pushes particles away",
-          "bubble": "Mouse makes the particles bubbles"
-        }
-      },
-      "onClick": {
-        "order": 5,
-        "type": "string",
-        "title": "Change what particles do when you click your mouse",
-        "showIf": "interactable",
-        "default": "repulse",
-        "enum": [
-          "push",
-          "remove",
-          "repulse",
-          "bubble"        
-        ],
-        "enumNames": {
-          "push": "Clicking creates particles",
-          "remove": "Clicking removes particles",
-          "repulse": "Clicking pushes particles away",
-          "bubble": "Clicking makes the particles bubble"
-        }
-      },
-      "outOrBounce": {
-        "order": 6,
-        "type": "string",
-        "title": "Allow particles to disappear offscreen or bounce off the edge",
-        "showIf": "interactable",
-        "default": "bounce",
-        "enum": [
-          "bounce",
-          "out"
-        ],
-        "enumNames": {
-          "bounce": "Particles hit the edge of the screen and bounce back in",
-          "out": "Particles flow offscreen and disappear"
+        "type": "object",
+        "title": "Behavior",
+        "properties": {
+          "outMode": {
+            "order": 0,
+            "type": "string",
+            "title": "Screen edges",
+            "description": "What should happens when a particle hits the edge of the screen?",
+            "default": "out",
+            "enum": [
+              "bounce",
+              "out"
+            ],
+            "enumNames": {
+              "bounce": "Bounce back in",
+              "out": "Flow offscreen"
+            }
+          }
         }
       }
     }

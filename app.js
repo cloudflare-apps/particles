@@ -30,11 +30,6 @@
           },
           polygon: {
             nb_sides: 5
-          },
-          image: {
-            src: "img/github.svg",
-            width: 100,
-            height: 100
           }
         },
         opacity: {
@@ -70,7 +65,7 @@
           direction: "none",
           random: false,
           straight: false,
-          out_mode: options.outOrBounce,
+          out_mode: options.behavior.outMode,
           bounce: false,
           attract: {
             enable: false,
@@ -83,32 +78,32 @@
         detect_on: "window",
         events: {
           onhover: {
-            enable: options.interactable,
-            mode: options.onHover
+            enable: options.interaction.onHover !== "none",
+            mode: options.interaction.onHover
           },
           onclick: {
-            enable: options.interactable,
-            mode: options.onClick
+            enable: options.interaction.onClick !== "none",
+            mode: options.interaction.onClick
           },
-          resize: options.interactable
+          resize: true
         },
         modes: {
           grab: {
-            distance: 400,
+            distance: 200,
             line_linked: {
-              opacity: 1
+              opacity: 0.4
             }
           },
           bubble: {
-            distance: 400,
-            size: 40,
+            distance: 350,
+            size: 4,
             duration: 2,
-            opacity: 8,
+            opacity: 0.9,
             speed: 3
           },
           repulse: {
-            distance: 200,
-            duration: 0.4
+            distance: 80,
+            duration: 0.3
           },
           push: {
             particles_nb: 4
