@@ -10,14 +10,9 @@
     element.id = CONTAINER_ID
     element.style.backgroundColor = options.backgroundColor
 
-    let interactable  
+    let interactable
 
-    if (options.interactable) {
-      interactable = "window"
-    }
-    else {
-      interactable = "canvas" //TODO see if we can make it none somehow or else change name to improve interactibility. also make a ? : operator for this
-    }
+    options.interactable ? interactable = "window" : interactable = "canvas"
 
     window.particlesJS(CONTAINER_ID, {
       "particles": {
@@ -92,14 +87,14 @@
         "detect_on": `${interactable}`,
         "events": {
           "onhover": {
-            "enable": true,
+            "enable": options.interactable,
             "mode": `${options.onHover}` //options.onhover
           },
           "onclick": {
-            "enable": true,
+            "enable": options.interactable,
             "mode": `${options.onClick}` //options.onclick
           },
-          "resize": true
+          "resize": options.interactable
         },
         "modes": {
           "grab": {
