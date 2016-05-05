@@ -1,14 +1,15 @@
 (function () {
   if (!window.addEventListener) return // Check for IE9+
 
+  const CONTAINER_ID = "eager-particles-js"
   let options = INSTALL_OPTIONS
   let element
 
   function updateElement() {
-    element = Eager.createElement({selector: "body", method: "prepend"})
-    element.id = "particles-js"
+    element = Eager.createElement({selector: "body", method: "prepend"}, element)
+    element.id = CONTAINER_ID
 
-    window.particlesJS("particles-js", {
+    window.particlesJS(CONTAINER_ID, {
       particles: {
         number: {
           value: 80,

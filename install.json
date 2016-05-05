@@ -6,10 +6,6 @@
         "src": "./build/app.css"
       },
       {
-        "type": "style",
-        "src": "./vendor/particles.css"
-      },
-      {
         "type": "script",
         "src": "./vendor/particles.js"
       },

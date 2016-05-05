@@ -3,14 +3,15 @@
 (function () {
   if (!window.addEventListener) return; // Check for IE9+
 
+  var CONTAINER_ID = "eager-particles-js";
   var options = INSTALL_OPTIONS;
   var element = void 0;
 
   function updateElement() {
-    element = Eager.createElement({ selector: "body", method: "prepend" });
-    element.id = "particles-js";
+    element = Eager.createElement({ selector: "body", method: "prepend" }, element);
+    element.id = CONTAINER_ID;
 
-    window.particlesJS("particles-js", {
+    window.particlesJS(CONTAINER_ID, {
       particles: {
         number: {
           value: 80,
