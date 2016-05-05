@@ -7,7 +7,7 @@
   var element = void 0;
 
   function updateElement() {
-    element = Eager.createElement(document.body, element);
+    element = Eager.createElement({ selector: "body", method: "prepend" });
     element.id = "particles-js";
 
     window.particlesJS("particles-js", {
