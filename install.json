@@ -25,6 +25,77 @@
   },
   "options": {
     "properties": {
+      "particleColor": {
+        "order": 1,
+        "title": "Particle color",
+        "type": "string",
+        "format": "color",
+        "default": "#ff012f"
+      },
+      "backgroundColor": {
+        "order": 2,
+        "title": "Background color",
+        "type": "string",
+        "format": "color",
+        "default": "#912CEE"
+      },
+      "interactable": {
+        "order": 3,
+        "type": "boolean",
+        "title": "Allow interactivity with particles",
+        "default": true
+      },
+      "onHover": {
+        "order": 4,
+        "type": "string",
+        "title": "Change what particles do when your mouse is there",
+        "showIf": "interactable",
+        "default": "bubble",
+        "enum": [
+          "grab",
+          "repulse",
+          "bubble"        
+        ],
+        "enumNames": {
+          "grab": "Mouse pulls in particles",
+          "repulse": "Mouse pushes particles away",
+          "bubble": "Mouse makes the particles bubbles"
+        }
+      },
+      "onClick": {
+        "order": 5,
+        "type": "string",
+        "title": "Change what particles do when you click your mouse",
+        "showIf": "interactable",
+        "default": "bubble",
+        "enum": [
+          "push",
+          "remove",
+          "repulse",
+          "bubble"        
+        ],
+        "enumNames": {
+          "push": "Clicking makes particles",
+          "remove": "Clicking removes particles",
+          "repulse": "Clicking pushes particles away",
+          "bubble": "Clicking makes the particles bubble"
+        }
+      },
+      "outOrBounce": {
+        "order": 6,
+        "type": "string",
+        "title": "Allow particles to disappear offscreen or bounce off the edge",
+        "showIf": "interactable",
+        "default": "bounce",
+        "enum": [
+          "bounce",
+          "out"
+        ],
+        "enumNames": {
+          "bounce": "Particles hit the edge of the screen and bounce back in",
+          "out": "Particles flow offscreen and disappear"
+        }
+      }
     }
   }
 }
