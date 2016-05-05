@@ -50,7 +50,7 @@
         "type": "string",
         "title": "Change what particles do when your mouse is there",
         "showIf": "interactable",
-        "default": "bubble",
+        "default": "grab",
         "enum": [
           "grab",
           "repulse",
@@ -75,7 +75,7 @@
           "bubble"        
         ],
         "enumNames": {
-          "push": "Clicking makes particles",
+          "push": "Clicking creates particles",
           "remove": "Clicking removes particles",
           "repulse": "Clicking pushes particles away",
           "bubble": "Clicking makes the particles bubble"
