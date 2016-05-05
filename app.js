@@ -137,6 +137,9 @@
     setOptions(nextOptions) {
       options = nextOptions
 
+      if (window.pJSDom) {
+        window.pJSDom.forEach($ => $.pJS.fn.vendors.destroypJS())
+      }
       updateElement()
     }
   }

@@ -138,6 +138,11 @@
     setOptions: function setOptions(nextOptions) {
       options = nextOptions;
 
+      if (window.pJSDom) {
+        window.pJSDom.forEach(function ($) {
+          return $.pJS.fn.vendors.destroypJS();
+        });
+      }
       updateElement();
     }
   };
