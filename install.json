@@ -1,9 +1,13 @@
 {
   "resources": {
-    "body": [
+    "head": [
       {
         "type": "style",
         "src": "./build/app.css"
+      },
+      {
+        "type": "script",
+        "src": "./vendor/particles.js"
       },
       {
         "type": "script",
@@ -21,6 +25,90 @@
   },
   "options": {
     "properties": {
+      "particleColor": {
+        "order": 1,
+        "title": "Particle color",
+        "type": "string",
+        "format": "color",
+        "default": "#fefefe"
+      },
+      "backgroundColor": {
+        "order": 2,
+        "title": "Background color",
+        "type": "string",
+        "format": "color",
+        "default": "#ffa267"
+      },
+      "interaction": {
+        "order": 3,
+        "type": "object",
+        "title": "Interaction",
+        "properties": {
+          "onHover": {
+            "order": 1,
+            "type": "string",
+            "description": "What should the particles do when the user moves their pointer?",
+            "title": "Hover",
+            "default": "grab",
+            "enum": [
+              "grab",
+              "repulse",
+              "bubble",
+              "none"
+            ],
+            "enumNames": {
+              "grab": "Connect to pointer",
+              "repulse": "Push away",
+              "bubble": "Grow",
+              "none": "Nothing"
+            }
+          },
+          "onClick": {
+            "order": 2,
+            "type": "string",
+            "title": "Click",
+            "description": "What should the particles do when the user clicks their pointer?",
+            "default": "push",
+            "enum": [
+              "push",
+              "remove",
+              "repulse",
+              "bubble",
+              "none"
+            ],
+            "enumNames": {
+              "push": "Add particles",
+              "remove": "Remove particles",
+              "repulse": "Push particles away",
+              "bubble": "Grow particles",
+              "none": "Nothing"
+            }
+          }
+        }
+      },
+
+      "behavior": {
+        "order": 4,
+        "type": "object",
+        "title": "Behavior",
+        "properties": {
+          "outMode": {
+            "order": 0,
+            "type": "string",
+            "title": "Screen edges",
+            "description": "What should happens when a particle hits the edge of the screen?",
+            "default": "out",
+            "enum": [
+              "out",
+              "bounce"
+            ],
+            "enumNames": {
+              "bounce": "Bounce back in",
+              "out": "Flow offscreen"
+            }
+          }
+        }
+      }
     }
   }
 }
