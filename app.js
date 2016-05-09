@@ -13,7 +13,7 @@
     window.particlesJS(CONTAINER_ID, {
       particles: {
         number: {
-          value: 80,
+          value: options.lessParticles ? 40 : 80,
           density: {
             enable: true,
             value_area: 800
@@ -33,10 +33,10 @@
           }
         },
         opacity: {
-          value: 0.5,
-          random: false,
+          value: 0.8,
+          random: true,
           anim: {
-            enable: false,
+            enable: true,
             speed: 1,
             opacity_min: 0.1,
             sync: false
@@ -54,9 +54,9 @@
         },
         line_linked: {
           enable: true,
-          distance: 150,
+          distance: 160,
           color: options.particleColor,
-          opacity: 0.4,
+          opacity: 0.45,
           width: 1
         },
         move: {
@@ -96,9 +96,9 @@
           },
           bubble: {
             distance: 350,
-            size: 4,
+            size: 3.1,
             duration: 2,
-            opacity: 0.9,
+            opacity: 0.8,
             speed: 3
           },
           repulse: {

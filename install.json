@@ -39,6 +39,7 @@
         "format": "color",
         "default": "#ffa267"
       },
+
       "interaction": {
         "order": 3,
         "type": "object",
@@ -71,14 +72,12 @@
             "default": "push",
             "enum": [
               "push",
-              "remove",
               "repulse",
               "bubble",
               "none"
             ],
             "enumNames": {
               "push": "Add particles",
-              "remove": "Remove particles",
               "repulse": "Push particles away",
               "bubble": "Grow particles",
               "none": "Nothing"
@@ -107,6 +106,33 @@
               "out": "Flow offscreen"
             }
           }
+        }
+      },
+
+      "showAdvanced": {
+        "order": 5,
+        "type": "boolean",
+        "title": "Show advanced options"
+      },
+
+      "lessParticles": {
+        "showIf": "showAdvanced",
+        "order": 6,
+        "type": "boolean",
+        "title": "Display less particles",
+        "description": "Less particles may increase performance."
+      },
+
+      "location": {
+        "order": 7,
+        "showIf": "showAdvanced",
+        "title": "Background location",
+        "description": "Where should the particle background appear?",
+        "type": "object",
+        "format": "element",
+        "default": {
+          "selector": "body",
+          "method": "prepend"
         }
       }
     }
