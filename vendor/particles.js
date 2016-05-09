@@ -754,6 +754,8 @@ var pJS = function(tag_id, params) {
     pJS.tmp.pushing = true
 
     for (var i = 0; i < nb; i++) {
+      pJS.particles.array.shift() // Maintain render performance by removing old particles.
+
       pJS.particles.array.push(
         new pJS.fn.particle(
           pJS.particles.color,
