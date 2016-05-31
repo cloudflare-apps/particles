@@ -8,12 +8,14 @@
   function updateElement() {
     element = Eager.createElement({selector: "body", method: "prepend"}, element)
     element.id = CONTAINER_ID
-    element.style.backgroundColor = options.backgroundColor
+    if (options.backgroundColor) {
+      element.style.backgroundColor = options.backgroundColor
+    }
 
     window.particlesJS(CONTAINER_ID, {
       particles: {
         number: {
-          value: options.lessParticles ? 40 : 80,
+          value: options.fewerParticles ? 40 : 80,
           density: {
             enable: true,
             value_area: 800
