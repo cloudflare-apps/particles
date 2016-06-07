@@ -1,15 +1,41 @@
 (function () {
   if (!window.addEventListener) return // Check for IE9+
 
+  const RGBA_PATTERN = /rgba?\((\d+),(\d+),(\d+),?(\d+)?\)/
   const CONTAINER_ID = "eager-particles-js"
+  const {abs, min, round} = Math
   let options = INSTALL_OPTIONS
   let element
 
+  function rgbToHex(r, g, b) {
+    return "#" + [r, g, b]
+      .map(color => {
+        const hex = color.toString(16)
+
+        return hex.length === 1 ? "0" + hex : hex
+      })
+      .join("")
+  }
+
   function updateElement() {
+    let {particleColor} = options
+
     element = Eager.createElement({selector: "body", method: "prepend"}, element)
     element.id = CONTAINER_ID
+
     if (options.backgroundColor) {
       element.style.backgroundColor = options.backgroundColor
+    }
+
+    if (!particleColor) {
+      const [r, g, b] = document.defaultView.getComputedStyle(document.body).backgroundColor
+        .replace(/\s/g, "")
+        .match(RGBA_PATTERN)
+        .slice(1, 4)
+        .map($ => min(round(abs(parseInt($, 10) - 255) * 0.5), 255)) // Find common contrast
+
+      // Particles.js seems to have incomplete support for receiving RGB.
+      particleColor = rgbToHex(r, g, b)
     }
 
     window.particlesJS(CONTAINER_ID, {
@@ -22,7 +48,7 @@
           }
         },
         color: {
-          value: options.particleColor
+          value: particleColor
         },
         shape: {
           type: "circle",
@@ -57,7 +83,7 @@
         line_linked: {
           enable: true,
           distance: 160,
-          color: options.particleColor,
+          color: particleColor,
           opacity: 0.45,
           width: 1
         },
@@ -120,7 +146,7 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", updateElement)
+    window.addEventListener("load", updateElement)
   }
   else {
     updateElement()

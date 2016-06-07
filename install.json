@@ -30,14 +30,14 @@
         "title": "Particle color",
         "type": "string",
         "format": "color",
-        "default": "#ffa267"
+        "description": "Defaults to contrasting color."
       },
       "backgroundColor": {
         "order": 2,
         "title": "Background color",
         "type": "string",
         "format": "color",
-        "plaeholder": "#ffa267"
+        "description": "Defaults to transparent."
       },
 
       "interaction": {
@@ -95,7 +95,7 @@
             "order": 0,
             "type": "string",
             "title": "Screen edges",
-            "description": "What should happens when a particle hits the edge of the screen?",
+            "description": "What should happen when a particle hits the edge of the screen?",
             "default": "out",
             "enum": [
               "out",
