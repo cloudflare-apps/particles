@@ -1,42 +1,59 @@
 (function () {
   if (!window.addEventListener) return // Check for IE9+
 
-  const RGBA_PATTERN = /rgba?\((\d+),(\d+),(\d+),?(\d+)?\)/
+  const {tinycolor} = window
   const CONTAINER_ID = "eager-particles-js"
-  const {abs, min, round} = Math
+  const getComputedStyle = document.defaultView.getComputedStyle.bind(document.defaultView)
   let options = INSTALL_OPTIONS
   let element
 
-  function rgbToHex(r, g, b) {
-    return "#" + [r, g, b]
-      .map(color => {
-        const hex = color.toString(16)
+  function getParticleColor() {
+    let particleColor
 
-        return hex.length === 1 ? "0" + hex : hex
-      })
-      .join("")
+    if (options.particleColor) {
+      particleColor = tinycolor(options.particleColor)
+    }
+    else {
+      const backgroundColor = options.backgroundColor || getComputedStyle(document.body).backgroundColor
+      const components = tinycolor(backgroundColor).toHsl()
+
+      // Find contrasting color.
+      components.l = Math.abs((components.l + 0.5) % 1) + (1 - components.s) * 0.1
+      particleColor = tinycolor(components)
+    }
+
+
+    return {
+      hex: particleColor.toHexString(),
+      rgb: particleColor.toRgb()
+    }
+  }
+
+  function getInteractivityEvents() {
+    return {
+      onhover: {
+        enable: options.interaction.onHover !== "none",
+        mode: options.interaction.onHover
+      },
+      onclick: {
+        enable: options.interaction.onClick !== "none",
+        mode: options.interaction.onClick
+      },
+      resize: true
+    }
   }
 
   function updateElement() {
-    let {particleColor} = options
+    const particleColor = getParticleColor()
 
     element = Eager.createElement({selector: "body", method: "prepend"}, element)
     element.id = CONTAINER_ID
 
-    if (options.backgroundColor) {
-      element.style.backgroundColor = options.backgroundColor
+    if (element.parentNode.tagName !== "BODY") {
+      element.parentNode.setAttribute("data-particle-parent", "")
     }
 
-    if (!particleColor) {
-      const [r, g, b] = document.defaultView.getComputedStyle(document.body).backgroundColor
-        .replace(/\s/g, "")
-        .match(RGBA_PATTERN)
-        .slice(1, 4)
-        .map($ => min(round(abs(parseInt($, 10) - 255) * 0.5), 255)) // Find common contrast
-
-      // Particles.js seems to have incomplete support for receiving RGB.
-      particleColor = rgbToHex(r, g, b)
-    }
+    element.style.backgroundColor = options.backgroundColor
 
     window.particlesJS(CONTAINER_ID, {
       particles: {
@@ -48,7 +65,7 @@
           }
         },
         color: {
-          value: particleColor
+          value: particleColor.hex
         },
         shape: {
           type: "circle",
@@ -83,7 +100,7 @@
         line_linked: {
           enable: true,
           distance: 160,
-          color: particleColor,
+          color: particleColor.hex,
           opacity: 0.45,
           width: 1
         },
@@ -104,17 +121,7 @@
       },
       interactivity: {
         detect_on: "window",
-        events: {
-          onhover: {
-            enable: options.interaction.onHover !== "none",
-            mode: options.interaction.onHover
-          },
-          onclick: {
-            enable: options.interaction.onClick !== "none",
-            mode: options.interaction.onClick
-          },
-          resize: true
-        },
+        events: getInteractivityEvents(),
         modes: {
           grab: {
             distance: 200,
@@ -153,7 +160,40 @@
   }
 
   window.INSTALL_SCOPE = {
-    setOptions(nextOptions) {
+    setColors(nextOptions) {
+      options = nextOptions
+
+      if (!window.pJSDom) {
+        updateElement()
+        return
+      }
+
+      if (element) element.style.backgroundColor = options.backgroundColor
+
+      const {hex, rgb} = getParticleColor()
+
+      window.pJSDom.forEach(({pJS: {particles}}) => {
+        particles.color.value = hex
+        particles.color.rgb = rgb
+
+        particles.line_linked.color = hex
+        particles.line_linked.color_rgb_line = rgb
+      })
+    },
+    setCommon(nextOptions) {
+      options = nextOptions
+
+      if (!window.pJSDom) {
+        updateElement()
+        return
+      }
+
+      window.pJSDom.forEach(({pJS}) => {
+        pJS.particles.move.out_mode = options.behavior.outMode
+        pJS.interactivity.events = getInteractivityEvents()
+      })
+    },
+    setResetworthy(nextOptions) {
       options = nextOptions
 
       if (window.pJSDom) {

@@ -1,54 +1,61 @@
 "use strict";
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 (function () {
   if (!window.addEventListener) return; // Check for IE9+
 
-  var RGBA_PATTERN = /rgba?\((\d+),(\d+),(\d+),?(\d+)?\)/;
-  var CONTAINER_ID = "eager-particles-js";
-  var abs = Math.abs;
-  var min = Math.min;
-  var round = Math.round;
+  var _window = window;
+  var tinycolor = _window.tinycolor;
 
+  var CONTAINER_ID = "eager-particles-js";
+  var getComputedStyle = document.defaultView.getComputedStyle.bind(document.defaultView);
   var options = INSTALL_OPTIONS;
   var element = void 0;
 
-  function rgbToHex(r, g, b) {
-    return "#" + [r, g, b].map(function (color) {
-      var hex = color.toString(16);
+  function getParticleColor() {
+    var particleColor = void 0;
 
-      return hex.length === 1 ? "0" + hex : hex;
-    }).join("");
+    if (options.particleColor) {
+      particleColor = tinycolor(options.particleColor);
+    } else {
+      var backgroundColor = options.backgroundColor || getComputedStyle(document.body).backgroundColor;
+      var components = tinycolor(backgroundColor).toHsl();
+
+      // Find contrasting color.
+      components.l = Math.abs((components.l + 0.5) % 1) + (1 - components.s) * 0.1;
+      particleColor = tinycolor(components);
+    }
+
+    return {
+      hex: particleColor.toHexString(),
+      rgb: particleColor.toRgb()
+    };
+  }
+
+  function getInteractivityEvents() {
+    return {
+      onhover: {
+        enable: options.interaction.onHover !== "none",
+        mode: options.interaction.onHover
+      },
+      onclick: {
+        enable: options.interaction.onClick !== "none",
+        mode: options.interaction.onClick
+      },
+      resize: true
+    };
   }
 
   function updateElement() {
-    var _options = options;
-    var particleColor = _options.particleColor;
-
+    var particleColor = getParticleColor();
 
     element = Eager.createElement({ selector: "body", method: "prepend" }, element);
     element.id = CONTAINER_ID;
 
-    if (options.backgroundColor) {
-      element.style.backgroundColor = options.backgroundColor;
+    if (element.parentNode.tagName !== "BODY") {
+      element.parentNode.setAttribute("data-particle-parent", "");
     }
 
-    if (!particleColor) {
-      var _document$defaultView = document.defaultView.getComputedStyle(document.body).backgroundColor.replace(/\s/g, "").match(RGBA_PATTERN).slice(1, 4).map(function ($) {
-        return min(round(abs(parseInt($, 10) - 255) * 0.5), 255);
-      });
-
-      var _document$defaultView2 = _slicedToArray(_document$defaultView, 3);
-
-      var r = _document$defaultView2[0];
-      var g = _document$defaultView2[1];
-      var b = _document$defaultView2[2]; // Find common contrast
-
-      // Particles.js seems to have incomplete support for receiving RGB.
-
-      particleColor = rgbToHex(r, g, b);
-    }
+    element.style.backgroundColor = options.backgroundColor;
 
     window.particlesJS(CONTAINER_ID, {
       particles: {
@@ -60,7 +67,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
           }
         },
         color: {
-          value: particleColor
+          value: particleColor.hex
         },
         shape: {
           type: "circle",
@@ -95,7 +102,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
         line_linked: {
           enable: true,
           distance: 160,
-          color: particleColor,
+          color: particleColor.hex,
           opacity: 0.45,
           width: 1
         },
@@ -116,17 +123,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
       },
       interactivity: {
         detect_on: "window",
-        events: {
-          onhover: {
-            enable: options.interaction.onHover !== "none",
-            mode: options.interaction.onHover
-          },
-          onclick: {
-            enable: options.interaction.onClick !== "none",
-            mode: options.interaction.onClick
-          },
-          resize: true
-        },
+        events: getInteractivityEvents(),
         modes: {
           grab: {
             distance: 200,
@@ -164,7 +161,48 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
   }
 
   window.INSTALL_SCOPE = {
-    setOptions: function setOptions(nextOptions) {
+    setColors: function setColors(nextOptions) {
+      options = nextOptions;
+
+      if (!window.pJSDom) {
+        updateElement();
+        return;
+      }
+
+      if (element) element.style.backgroundColor = options.backgroundColor;
+
+      var _getParticleColor = getParticleColor();
+
+      var hex = _getParticleColor.hex;
+      var rgb = _getParticleColor.rgb;
+
+
+      window.pJSDom.forEach(function (_ref) {
+        var particles = _ref.pJS.particles;
+
+        particles.color.value = hex;
+        particles.color.rgb = rgb;
+
+        particles.line_linked.color = hex;
+        particles.line_linked.color_rgb_line = rgb;
+      });
+    },
+    setCommon: function setCommon(nextOptions) {
+      options = nextOptions;
+
+      if (!window.pJSDom) {
+        updateElement();
+        return;
+      }
+
+      window.pJSDom.forEach(function (_ref2) {
+        var pJS = _ref2.pJS;
+
+        pJS.particles.move.out_mode = options.behavior.outMode;
+        pJS.interactivity.events = getInteractivityEvents();
+      });
+    },
+    setResetworthy: function setResetworthy(nextOptions) {
       options = nextOptions;
 
       if (window.pJSDom) {
