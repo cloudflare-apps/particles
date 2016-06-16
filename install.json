@@ -7,6 +7,10 @@
       },
       {
         "type": "script",
+        "src": "./vendor/tinycolor.js"
+      },
+      {
+        "type": "script",
         "src": "./vendor/particles.js"
       },
       {
