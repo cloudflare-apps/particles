@@ -266,19 +266,19 @@ var pJS = function(tag_id, params) {
 
     /* color */
     this.color = {}
-    if (typeof (color.value) == "object") {
-
-      if (color.value instanceof Array) {
+    if (typeof color.value === "object") {
+      if (Array.isArray(color.value)) {
         var color_selected = color.value[Math.floor(Math.random() * pJS.particles.color.value.length)]
         this.color.rgb = hexToRgb(color_selected)
       } else {
         if (color.value.r != undefined && color.value.g != undefined && color.value.b != undefined) {
           this.color.rgb = {
-            r: color.value.r,
-            g: color.value.g,
-            b: color.value.b
+            r: parseInt(color.value.r, 10),
+            g: parseInt(color.value.g, 10),
+            b: parseInt(color.value.b, 10)
           }
         }
+
         if (color.value.h != undefined && color.value.s != undefined && color.value.l != undefined) {
           this.color.hsl = {
             h: color.value.h,
@@ -289,14 +289,14 @@ var pJS = function(tag_id, params) {
       }
 
     }
-    else if (color.value == "random") {
+    else if (color.value === "random") {
       this.color.rgb = {
         r: (Math.floor(Math.random() * (255 - 0 + 1)) + 0),
         g: (Math.floor(Math.random() * (255 - 0 + 1)) + 0),
         b: (Math.floor(Math.random() * (255 - 0 + 1)) + 0)
       }
     }
-    else if (typeof (color.value) == "string") {
+    else if (typeof color.value === "string") {
       this.color = color
       this.color.rgb = hexToRgb(this.color.value)
     }
