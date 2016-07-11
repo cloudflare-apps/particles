@@ -7,6 +7,10 @@
       },
       {
         "type": "script",
+        "src": "./vendor/tinycolor.js"
+      },
+      {
+        "type": "script",
         "src": "./vendor/particles.js"
       },
       {
@@ -18,8 +22,16 @@
   "preview": {
     "handlers": [
       {
-        "options": ["*"],
-        "execute": "INSTALL_SCOPE.setOptions(INSTALL_OPTIONS)"
+        "options": ["particleColor", "backgroundColor"],
+        "execute": "INSTALL_SCOPE.setColors(INSTALL_OPTIONS)"
+      },
+      {
+        "options": ["interaction", "behavior", "showAdvanced"],
+        "execute": "INSTALL_SCOPE.setCommon(INSTALL_OPTIONS)"
+      },
+      {
+        "options": ["fewerParticles"],
+        "execute": "INSTALL_SCOPE.setResetworthy(INSTALL_OPTIONS)"
       }
     ]
   },
@@ -121,19 +133,6 @@
         "type": "boolean",
         "title": "Display fewer particles",
         "description": "Fewer particles may increase performance."
-      },
-
-      "location": {
-        "order": 7,
-        "showIf": "showAdvanced",
-        "title": "Background location",
-        "description": "Where should the particle background appear?",
-        "type": "object",
-        "format": "element",
-        "default": {
-          "selector": "body",
-          "method": "prepend"
-        }
       }
     }
   }
