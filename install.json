@@ -37,19 +37,20 @@
   },
   "options": {
     "properties": {
-      "particleColor": {
-        "order": 1,
-        "title": "Particle color",
-        "type": "string",
-        "format": "color",
-        "description": "Defaults to contrasting color."
-      },
       "backgroundColor": {
-        "order": 2,
+        "order": 1,
         "title": "Background color",
         "type": "string",
         "format": "color",
         "description": "Defaults to transparent."
+      },
+
+      "particleColor": {
+        "order": 2,
+        "title": "Particle color",
+        "type": "string",
+        "format": "color",
+        "description": "Defaults to contrasting color."
       },
 
       "interaction": {
