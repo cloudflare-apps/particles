@@ -1,7 +1,7 @@
 {
-  "name": "eager-particles",
+  "name": "cf-apps-particles",
   "version": "0.0.0",
-  "description": "Particle background with [Eager](https://eager.io).",
+  "description": "Particle background with [Cloudflare Apps](https://www.cloudflare.com/apps/).",
   "main": "app.js",
   "scripts": {
     "watch:js": "babel --watch --out-dir build app.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EagerApps/Particles.git"
+    "url": "git+https://github.com/CloudflareApps/Particles.git"
   },
-  "author": "Eager",
+  "contributors": ["Vincent Garreau", "Cloudflare"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EagerApps/Particles/issues"
+    "url": "https://github.com/CloudflareApps/Particles/issues"
   },
-  "homepage": "https://github.com/EagerApps/Particles#readme",
+  "homepage": "https://github.com/CloudflareApps/Particles#readme",
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "6.3.6",
