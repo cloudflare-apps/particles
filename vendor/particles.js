@@ -1469,9 +1469,11 @@ function isInArray(value, array) {
 
 /* ---------- particles.js functions - start ------------ */
 
-window.pJSDom = []
+var Particles = {
+  pJSDom = []
+}
 
-window.particlesJS = function(tag_id, params) {
+Particles.init = function init (tag_id, params) {
 
   // console.log(params);
 
@@ -1516,7 +1518,7 @@ window.particlesJS = function(tag_id, params) {
 
 }
 
-window.particlesJS.load = function(tag_id, path_config_json, callback) {
+Particles.load = function load(tag_id, path_config_json, callback) {
 
   /* load json config */
   var xhr = new XMLHttpRequest()
@@ -1525,7 +1527,7 @@ window.particlesJS.load = function(tag_id, path_config_json, callback) {
     if (xhr.readyState == 4) {
       if (xhr.status == 200) {
         var params = JSON.parse(data.currentTarget.response)
-        window.particlesJS(tag_id, params)
+        Particles.init(tag_id, params)
         if (callback) callback()
       } else {
         console.log("Error pJS - XMLHttpRequest status: " + xhr.status)
@@ -1535,4 +1537,10 @@ window.particlesJS.load = function(tag_id, path_config_json, callback) {
   }
   xhr.send()
 
+}
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = Particles
+} else {
+  window.Particles = Particles
 }

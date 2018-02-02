@@ -1,8 +1,8 @@
 {
-  "name": "cf-apps-particles",
-  "version": "0.0.0",
+  "name": "@cloudflare-apps/particles",
+  "version": "2.0.0",
   "description": "Particle background with [Cloudflare Apps](https://www.cloudflare.com/apps/).",
-  "main": "app.js",
+  "main": "vendor/particles.js",
   "scripts": {
     "watch:js": "babel --watch --out-dir build app.js",
     "watch:css": "postcss --watch --use autoprefixer -o build/app.css app.css",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CloudflareApps/Particles.git"
+    "url": "git+https://github.com/cloudflare-apps/particles.git"
   },
   "contributors": ["Vincent Garreau", "Cloudflare"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CloudflareApps/Particles/issues"
+    "url": "https://github.com/cloudflare-apps/particles/issues"
   },
-  "homepage": "https://github.com/CloudflareApps/Particles#readme",
+  "homepage": "https://github.com/cloudflare-apps/particles#readme",
   "dependencies": {},
   "devDependencies": {
     "autoprefixer": "6.3.6",
