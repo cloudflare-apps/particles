@@ -2,7 +2,7 @@
   if (!window.addEventListener) return // Check for IE9+
 
   const {tinycolor} = window
-  const CONTAINER_ID = "eager-particles-js"
+  const CONTAINER_ID = "cf-particles-js"
   const getComputedStyle = document.defaultView.getComputedStyle.bind(document.defaultView)
   let options = INSTALL_OPTIONS
   let element
@@ -46,7 +46,7 @@
   function updateElement() {
     const particleColor = getParticleColor()
 
-    element = Eager.createElement({selector: "body", method: "prepend"}, element)
+    element = INSTALL.createElement({selector: "body", method: "prepend"}, element)
     element.id = CONTAINER_ID
 
     if (element.parentNode.tagName !== "BODY") {
