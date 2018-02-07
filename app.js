@@ -1,19 +1,17 @@
-(function () {
+;(function () {
   if (!window.addEventListener) return // Check for IE9+
 
   const {tinycolor} = window
-  const CONTAINER_ID = "cf-particles-js"
   const getComputedStyle = document.defaultView.getComputedStyle.bind(document.defaultView)
   let options = INSTALL_OPTIONS
   let element
 
-  function getParticleColor() {
+  function getParticleColor () {
     let particleColor
 
     if (options.particleColor) {
       particleColor = tinycolor(options.particleColor)
-    }
-    else {
+    }else {
       const backgroundColor = options.backgroundColor || getComputedStyle(document.body).backgroundColor
       const components = tinycolor(backgroundColor).toHsl()
 
@@ -22,40 +20,39 @@
       particleColor = tinycolor(components)
     }
 
-
     return {
       hex: particleColor.toHexString(),
       rgb: particleColor.toRgb()
     }
   }
 
-  function getInteractivityEvents() {
+  function getInteractivityEvents () {
     return {
       onhover: {
-        enable: options.interaction.onHover !== "none",
+        enable: options.interaction.onHover !== 'none',
         mode: options.interaction.onHover
       },
       onclick: {
-        enable: options.interaction.onClick !== "none",
+        enable: options.interaction.onClick !== 'none',
         mode: options.interaction.onClick
       },
       resize: true
     }
   }
 
-  function updateElement() {
+  function updateElement () {
     const particleColor = getParticleColor()
 
-    element = INSTALL.createElement({selector: "body", method: "prepend"}, element)
-    element.id = CONTAINER_ID
+    element = INSTALL.createElement({selector: 'body', method: 'prepend'}, element)
+    element.setAttribute('app', 'particles')
 
-    if (element.parentNode.tagName !== "BODY") {
-      element.parentNode.setAttribute("data-particle-parent", "")
+    if (element.parentNode.tagName !== 'BODY') {
+      element.parentNode.setAttribute('data-particle-parent', '')
     }
 
     element.style.backgroundColor = options.backgroundColor
 
-    window.particlesJS(CONTAINER_ID, {
+    window.particlesJS(element, {
       particles: {
         number: {
           value: options.fewerParticles ? 40 : 80,
@@ -68,10 +65,10 @@
           value: particleColor.hex
         },
         shape: {
-          type: "circle",
+          type: 'circle',
           stroke: {
             width: 0,
-            color: "#000000"
+            color: '#000000'
           },
           polygon: {
             nb_sides: 5
@@ -107,7 +104,7 @@
         move: {
           enable: true,
           speed: 6,
-          direction: "none",
+          direction: 'none',
           random: false,
           straight: false,
           out_mode: options.behavior.outMode,
@@ -120,7 +117,7 @@
         }
       },
       interactivity: {
-        detect_on: "window",
+        detect_on: 'window',
         events: getInteractivityEvents(),
         modes: {
           grab: {
@@ -152,10 +149,9 @@
     })
   }
 
-  if (document.readyState === "loading") {
-    window.addEventListener("load", updateElement)
-  }
-  else {
+  if (document.readyState === 'loading') {
+    window.addEventListener('load', updateElement)
+  }else {
     updateElement()
   }
 

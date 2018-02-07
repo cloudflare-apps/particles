@@ -1,4 +1,4 @@
-#cf-particles-js {
+cloudflare-app[app='particles'] {
   bottom: 0;
   display: block;
   left: 0;
@@ -8,7 +8,7 @@
   z-index: -1;
 }
 
-#cf-particles-js .particles-js-canvas-el {
+cloudflare-app[app='particles'] .particles-js-canvas-el {
   display: block;
   height: 100%;
   width: 100%;
